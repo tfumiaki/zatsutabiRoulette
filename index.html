@@ -24,6 +24,18 @@
       <div class="face six">6</div>
     </div>
   </div>
+  <div id="history-section">
+    <h2>行き先履歴</h2>
+    <form id="history-form">
+      <input id="history-place" placeholder="行き先" required>
+      <label>予定日: <input id="planned-date" type="date"></label>
+      <label>実際にいった日: <input id="actual-date" type="date"></label>
+      <input id="album-url" placeholder="写真アルバムの共有URL">
+      <input id="participants" placeholder="参加者(カンマ区切り)">
+      <button type="submit">追加</button>
+    </form>
+    <ul id="history-list"></ul>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

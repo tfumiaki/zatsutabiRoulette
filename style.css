@@ -75,3 +75,22 @@ button {
   justify-content: center;
   background: rgba(255,255,255,0.8);
 }
+
+#history-section {
+  max-width: 600px;
+  margin: 2em auto;
+  text-align: left;
+}
+
+#history-form input {
+  display: block;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#history-list {
+  list-style: none;
+  padding: 0;
+}
