@@ -4,6 +4,35 @@ const boardBtn = document.getElementById('make-board');
 const boardDiv = document.getElementById('board');
 const dice = document.getElementById('dice');
 const diceContainer = document.getElementById('dice-container');
+const historyForm = document.getElementById('history-form');
+const historyList = document.getElementById('history-list');
+
+let history = JSON.parse(localStorage.getItem('placeHistory') || '[]');
+
+function renderHistory() {
+  historyList.innerHTML = '';
+  history.forEach(item => {
+    const li = document.createElement('li');
+    const title = document.createElement('div');
+    title.textContent = `${item.place} - 予定:${item.plannedDate || ''} 実際:${item.actualDate || ''}`;
+    li.appendChild(title);
+    if (item.albumUrl) {
+      const link = document.createElement('a');
+      link.href = item.albumUrl;
+      link.textContent = '写真アルバム';
+      link.target = '_blank';
+      li.appendChild(link);
+    }
+    if (item.participants) {
+      const p = document.createElement('div');
+      p.textContent = `参加者: ${item.participants}`;
+      li.appendChild(p);
+    }
+    historyList.appendChild(li);
+  });
+}
+
+renderHistory();
 
 let ws = null;
 if (location.protocol.startsWith('http')) {
@@ -86,3 +115,20 @@ function rollDice() {
 }
 
 dice.addEventListener('click', rollDice);
+
+historyForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const place = document.getElementById('history-place').value.trim();
+  const plannedDate = document.getElementById('planned-date').value;
+  const actualDate = document.getElementById('actual-date').value;
+  const albumUrl = document.getElementById('album-url').value.trim();
+  const participants = document.getElementById('participants').value.trim();
+  if (!place) {
+    alert('行き先を入力してください');
+    return;
+  }
+  history.push({ place, plannedDate, actualDate, albumUrl, participants });
+  localStorage.setItem('placeHistory', JSON.stringify(history));
+  historyForm.reset();
+  renderHistory();
+});
